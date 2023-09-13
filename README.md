@@ -21,11 +21,11 @@ A small photo gallery made in PHP/HTML/JS/CSS.
 
 ## F.A.Q
 
-**Q: Can I use something else than JPEG?**
+**Q: Can I use something else than JPEG?**  
 A: Yes. Just change the extension in the PHP code at the top of the file.
 
-**Q: How can I prepare my photos easily?**
-A: You can use GraphicsImagick (or ImageMagick) to optimise your photos.
+**Q: How can I prepare my photos easily?**  
+A: You can use GraphicsImagick (or ImageMagick) to optimise your photos.  
 For instance, put your photos in the folder of *Galerie* then run this command:
 
 ```sh
