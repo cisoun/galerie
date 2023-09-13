@@ -9,12 +9,8 @@ $images = glob('./img/*.jpg');
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>My photos</title>
 	<style type="text/css">
-		:root { --gap: 3vw; }
-		body {
-			border:           0;
-			margin:           0;
-			padding:          0;
-		}
+		:root         { --gap:    3vw; }
+		body          { margin:   0; }
 		body.noscroll { overflow: hidden; }
 		div {
 			column-count:     1;
