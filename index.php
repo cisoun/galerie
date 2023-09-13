@@ -17,9 +17,10 @@ $images = glob('./img/*.jpg');
 			column-gap:       var(--gap);
 			margin:           auto;
 			padding:          calc(2 * var(--gap));
-  		}
+		}
 		img {
 			cursor:           zoom-in;
+			height:           auto;
 			margin-bottom:    var(--gap);
 			user-select:      none;
 			width:            100%;
@@ -47,8 +48,8 @@ $images = glob('./img/*.jpg');
 </head>
 <body>
 <div>
-<?php foreach ($images as $image): ?>
-	<img src="<?= ltrim($image, './') ?>" loading="lazy"/>
+<?php foreach ($images as $i): ?>
+<img src="<?= ltrim($i, './') ?>" <?= getimagesize($i)[3] ?> loading="lazy"/>
 <?php endforeach; ?>
 </div>
 <script type="text/javascript">
