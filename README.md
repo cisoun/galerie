@@ -16,8 +16,8 @@ A small photo gallery made in PHP/HTML/JS/CSS.
 
 ## Installation
 
-1) Copy [`index.php`](index.php) into a folder.
-2) Copy your JPEG files into an `img` subfolder.
+1) Copy [index.php](index.php) into a folder.
+2) Create a "img" subfolder and copy your JPEG files inside.
 
 ## F.A.Q
 
@@ -35,6 +35,11 @@ for i in *.jpg; do
 	gm convert $i -resize 1500x1500 img/$(basename $i)
 done
 ```
+
+> I don't need lazy loading, how can I remove it?
+
+Remove the getimagesize PHP call and loading attribute in the \<img> element.  
+On a personal note, lazy loading can make sense in an album, especially if you show pictures in high definition that cost you bandwidth. The best situation would be balancing the quality vs size of the pictures. This way, you could just ignore lazy loading.
 
 ## License
 
