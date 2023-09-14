@@ -3,7 +3,7 @@ Galerie
 
 A small photo gallery made in PHP/HTML/JS/CSS.
 
-![preview_1000](https://github.com/cisoun/Galerie/assets/930282/124f6ab9-0276-4fde-8ef4-2affdc29c223)
+![preview_1500](https://github.com/cisoun/Galerie/assets/930282/42f72615-c702-457d-8dbf-f730173aacbe)
 
 ## Features
 
@@ -38,7 +38,7 @@ done
 
 > I don't need lazy loading, how can I remove it?
 
-Remove the getimagesize PHP call and loading attribute in the \<img> element.  
+Remove the `getimagesize` PHP call and `loading="lazy"` attribute in the `<img>` element.  
 On a personal note, lazy loading can make sense in an album, especially if you show pictures in high definition that cost you bandwidth. The best situation would be balancing the quality vs size of the pictures. This way, you could just ignore lazy loading.
 
 ## License
