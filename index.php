@@ -1,89 +1,82 @@
-<?php
-if (str_ends_with($_SERVER['REQUEST_URI'], '.jpg')) return false;
-$images = glob('./img/*.jpg');
-?>
+<?php $images = glob('./*.{jpg,png,gif,webp}', GLOB_BRACE); ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="generator" content="https://github.com/cisoun/Galerie">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>My photos</title>
 	<style type="text/css">
-		:root         { --gap:    3vw; }
-		body          { margin:   0; }
-		body.noscroll { overflow: hidden; }
-		div {
-			column-count:     1;
-			column-gap:       var(--gap);
-			margin:           auto;
-			padding:          calc(2 * var(--gap));
-		}
-		img {
-			cursor:           zoom-in;
-			height:           auto;
-			margin-bottom:    var(--gap);
-			user-select:      none;
-			width:            100%;
-		}
-		img.zoom {
-			backdrop-filter:  blur(1rem);
-			background-color: #fffc;
-			cursor:           zoom-out;
-			height:           calc(100% - 2 * var(--gap));
-			left:             0;
-			object-fit:       contain;
-			padding:          var(--gap);
-			position:         fixed;
-			top:              0;
-			width:            calc(100% - 2 * var(--gap));
-			z-index:          1;
-		}
+		:root          { --gap:               3vw; }
+		body           { background-color:    #fff;
+			             color:               #000;
+			             margin:              0;
+			             user-select:         none; }
+		body.noscroll  { overflow:            hidden; }
+		#grid          { column-count:        1;
+			             column-gap:          var(--gap);
+			             margin:              auto;
+			             padding:             calc(2 * var(--gap)); }
+		#grid img      { cursor:              zoom-in;
+			             height:              auto;
+			             margin-bottom:       var(--gap);
+			             width:               100%; }
+		#modal         { backdrop-filter:     blur(1rem);
+			             background-color:    #fffe;
+			             background-position: center;
+			             background-repeat:   no-repeat;
+			             background-size:     contain;
+			             cursor:              zoom-out;
+			             display:             none;
+			             height:              100%;
+			             justify-content:     space-between;
+			             position:            fixed;
+			             width:               100%; }
+		#modal.visible { display: flex; }
+		#modal a       { cursor:              pointer;
+			             font-size:           3rem;
+			             line-height:         100vh;
+			             text-align:          center;
+			             width:               20%; }
 		@media (prefers-color-scheme: dark) {
-			body     { background-color: #111; }
-			img.zoom { background-color: #000c; }
+			body       { background-color:    #000;
+				         color:               #fff; }
+			#modal     { background-color:    #000e; }
 		}
-		@media only screen and (min-width: 600px) { div { column-count: 2; } }
-		@media only screen and (min-width: 992px) { div { column-count: 3; } }
+		@media only screen and (max-width: 600px) { #modal a { display:      none; } }
+		@media only screen and (min-width: 600px) { #grid    { column-count: 2; } }
+		@media only screen and (min-width: 992px) { #grid    { column-count: 3; } }
 	</style>
 </head>
 <body>
-<div>
+<div id="modal"><a>❮</a><a>❯</a></div>
+<div id="grid">
 <?php foreach ($images as $i): ?>
 <img src="<?= ltrim($i, './') ?>" <?= getimagesize($i)[3] ?> loading="lazy"/>
 <?php endforeach; ?>
 </div>
 <script type="text/javascript">
-let focused, touchX;
-const container = document.querySelector('div');
-const handleClick = (e) => {
-	if      (focused && e.clientX <= window.innerWidth * 0.25) previous();
-	else if (focused && e.clientX >= window.innerWidth * 0.75) next();
-	else if (!zoom(e.target)) focused = null;
-	document.body.classList.toggle('noscroll', focused);
+let current, touchX;
+const show     = e => modal.style.backgroundImage = `url('${(current = e).src}')`;
+const next     = _ => show(current.nextElementSibling     ?? grid.firstElementChild);
+const previous = _ => show(current.previousElementSibling ?? grid.lastElementChild);
+const toggle   = e => {
+	document.body.classList.toggle('noscroll', modal.classList.toggle('visible'));
+	show(e.srcElement);
 }
-const next = () => {
-	zoom(focused);
-	zoom(focused.nextElementSibling ?? container.firstElementChild);
-}
-const previous = () => {
-	zoom(focused);
-	zoom(focused.previousElementSibling ?? container.lastElementChild);
-}
-const zoom = (e) => {
-	focused = e;
-	return e.classList.toggle('zoom');
-}
-Array.from(container.children).map(e => e.onclick = handleClick);
-document.onkeydown = (e) => {
+Array.from(grid.children).map(e => e.onclick = toggle);
+document.onkeydown = e => {
 	if      (e.keyCode == 37) previous();
 	else if (e.keyCode == 39) next();
 }
-document.ontouchend = (e) => {
-	if      (!focused) return;
-    else if (e.changedTouches[0].clientX > touchX) previous();
-    else if (e.changedTouches[0].clientX < touchX) next();
+modal.childNodes[0].onclick = e => { e.stopPropagation(); previous(); }
+modal.childNodes[1].onclick = e => { e.stopPropagation(); next(); }
+modal.onclick               = e => toggle(e);
+modal.ontouchstart          = e => touchX = e.changedTouches[0].clientX;
+modal.ontouchend            = e => {
+    if      (e.changedTouches[0].clientX - touchX > +50) previous();
+    else if (e.changedTouches[0].clientX - touchX < -50) next();
 }
-document.ontouchstart = (e) => touchX = e.changedTouches[0].clientX;
 </script>
 </body>
 </html>

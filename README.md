@@ -11,35 +11,34 @@ A small photo gallery made in PHP/HTML/JS/CSS.
  - Less than 100 lines of code
  - Responsive (masonery style)
  - Dark mode support
- - Custom lightbox with navigation by swiping or arrow keys
+ - Custom lightbox with navigation by swiping, arrow keys or click
  - Lazy loading (load images on scroll)
+ - Supports JPEG/PNG/GIF/WEBP (can be extended)
 
 ## Installation
 
-1) Copy [index.php](index.php) into a folder.
-2) Create a "img" subfolder and copy your JPEG files inside.
+Just copy [index.php](index.php) and your pictures into a folder on your server.
 
 ## F.A.Q
 
-> Can I use something else than JPEG?
+> Can I add another image format?
 
-Yes. Just change the extension in the PHP code at the top of the file.
+Yes. Just add the extension in the header PHP code.
 
 > How can I prepare my photos easily?
 
 You can use GraphicsImagick (or ImageMagick) to optimise your photos.  
-For instance, put your photos in the folder of *Galerie* then run this command:
+For instance, transform your photos by running this command:
 
 ```sh
 for i in *.jpg; do
-	gm convert $i -resize 1500x1500 img/$(basename $i)
+	gm convert $i -resize 1500x1500 photos/$(basename $i)
 done
 ```
 
 > I don't need lazy loading, how can I remove it?
 
-Remove the `getimagesize` PHP call and `loading="lazy"` attribute in the `<img>` element.  
-On a personal note, lazy loading can make sense in an album, especially if you show pictures in high definition that cost you bandwidth. The best situation would be balancing the quality vs size of the pictures. This way, you could just ignore lazy loading.
+Remove the `getimagesize` PHP call and the `loading="lazy"` attribute in the `<img>` element. 
 
 ## License
 
