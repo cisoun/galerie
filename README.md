@@ -1,7 +1,7 @@
 Galerie
 =======
 
-A small photo gallery made in PHP/HTML/JS/CSS.
+A small photo gallery in a single PHP file.
 
 ![preview_1500](https://github.com/cisoun/Galerie/assets/930282/42f72615-c702-457d-8dbf-f730173aacbe)
 
@@ -11,9 +11,9 @@ A small photo gallery made in PHP/HTML/JS/CSS.
  - Less than 100 lines of code
  - Responsive (masonery style)
  - Dark mode support
- - Custom lightbox with navigation by swiping, arrow keys or click
+ - Custom lightbox with navigation by gesture, arrow keys and clicks
  - Lazy loading (load images on scroll)
- - Supports JPEG/PNG/GIF/WEBP (can be extended)
+ - Support for JPEG/PNG/GIF/WEBP files (can be extended)
 
 ## Installation
 
@@ -25,9 +25,13 @@ Just copy [index.php](index.php) and your pictures into a folder on your server.
 
 Yes. Just add the extension in the header PHP code.
 
+> I don't need lazy loading, how can I remove it?
+
+Remove the `getimagesize` PHP call and the `loading="lazy"` attribute in the `<img>` element.
+
 > How can I prepare my photos easily?
 
-You can use GraphicsImagick (or ImageMagick) to optimise your photos.  
+You can use GraphicsImagick (or ImageMagick) to optimise your photos.  	
 For instance, transform your photos by running this command:
 
 ```sh
@@ -35,10 +39,6 @@ for i in *.jpg; do
 	gm convert $i -resize 1500x1500 photos/$(basename $i)
 done
 ```
-
-> I don't need lazy loading, how can I remove it?
-
-Remove the `getimagesize` PHP call and the `loading="lazy"` attribute in the `<img>` element. 
 
 ## License
 
