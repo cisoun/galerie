@@ -13,13 +13,17 @@ A small photo gallery in a single PHP file.
  - Dark mode support
  - Custom lightbox with navigation by gesture, arrow keys and clicks
  - Lazy loading (load images on scroll)
- - Support for JPEG/PNG/GIF/WEBP files (can be extended)
+ - Support for JPEG/PNG/GIF/WEBP/AVIF files (can be extended)
 
 ## Installation
 
 Just copy [index.php](index.php) and your pictures into a folder on your server.
 
 ## F.A.Q
+
+> How can I change the title of the page?
+
+Change the content of the <title> tag in [index.php](index.php).
 
 > Can I add another image format?
 

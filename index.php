@@ -1,4 +1,4 @@
-<?php $images = glob('./*.{jpg,png,gif,webp}', GLOB_BRACE); ?>
+<?php $images = glob('./*.{jpg,png,gif,webp,avif}', GLOB_BRACE); ?>
 <!DOCTYPE html>
 <html>
 <head>
